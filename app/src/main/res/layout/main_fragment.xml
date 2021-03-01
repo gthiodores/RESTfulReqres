@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.gilbertthio.restfulreqres.ui.main.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/button_previous"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:listItem="@{viewModel.users}"
+            tools:itemCount="6"
+            tools:listitem="@layout/item_recycler_users" />
+
+        <TextView
+            android:id="@+id/current_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/cabin"
+            android:text="@{viewModel.pageString}"
+            app:layout_constraintEnd_toStartOf="@id/of"
+            app:layout_constraintTop_toTopOf="@id/of"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/of"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="@font/cabin"
+            android:text="@string/string_of"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/max_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/cabin"
+            android:text="@{viewModel.maxPagesString}"
+            app:layout_constraintStart_toEndOf="@id/of"
+            app:layout_constraintTop_toTopOf="@id/of"
+            tools:text="2" />
+
+        <Button
+            android:id="@+id/button_previous"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:onClick="@{() -> viewModel.previousPage()}"
+            app:page="@{viewModel.page}"
+            android:text="@string/previous"
+            app:layout_constraintEnd_toStartOf="@id/current_page"
+            app:layout_constraintBaseline_toBaselineOf="@id/of" />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/next"
+            android:onClick="@{() -> viewModel.nextPage()}"
+            app:currentPage="@{viewModel.page}"
+            app:maxPage="@{viewModel.maxPage}"
+            app:layout_constraintStart_toEndOf="@id/max_page"
+            app:layout_constraintBaseline_toBaselineOf="@id/of" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
